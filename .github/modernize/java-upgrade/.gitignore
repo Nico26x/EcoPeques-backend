@@ -1,0 +1,20 @@
+# Archivos de Variables de Entorno (PRIVADOS - NUNCA SUBIR)
+.env
+.env.local
+.env.*.local
+
+# Archivos y carpetas de compilación de Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Entorno de desarrollo de Visual Studio Code e IntelliJ
+.vscode/
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Logs y bases de datos temporales locales
+*.log
+*.h2.db

@@ -5,6 +5,7 @@ import com.ecopeques.backend.dto.request.UsuarioRequestDTO;
 import com.ecopeques.backend.dto.response.AuthResponseDTO;
 import com.ecopeques.backend.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +21,7 @@ public class AuthController {
 
     @PostMapping("/registro")
     public ResponseEntity<AuthResponseDTO> registrar(@RequestBody UsuarioRequestDTO request) {
-        return ResponseEntity.ok(authService.registrar(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(authService.registrar(request));
     }
 
     @PostMapping("/login")

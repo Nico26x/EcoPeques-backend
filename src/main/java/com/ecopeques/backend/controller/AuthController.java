@@ -4,6 +4,7 @@ import com.ecopeques.backend.dto.request.AuthRequestDTO;
 import com.ecopeques.backend.dto.request.UsuarioRequestDTO;
 import com.ecopeques.backend.dto.response.AuthResponseDTO;
 import com.ecopeques.backend.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/registro")
-    public ResponseEntity<AuthResponseDTO> registrar(@RequestBody UsuarioRequestDTO request) {
+    public ResponseEntity<AuthResponseDTO> registrar(@Valid @RequestBody UsuarioRequestDTO request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.registrar(request));
     }
 

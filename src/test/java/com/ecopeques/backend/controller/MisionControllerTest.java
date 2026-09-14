@@ -60,4 +60,14 @@ class MisionControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].categoria").value("AGUA"));
     }
+
+    @Test
+    @DisplayName("GET /api/misiones/categoria/CATEGORIA_INEXISTENTE - Debe retornar HTTP 400 Bad Request")
+    void testObtenerMisionesPorCategoria_CategoriaInvalida_RetornaHTTP400() throws Exception {
+        mockMvc.perform(get("/api/misiones/categoria/CATEGORIA_INEXISTENTE"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.error").value("Bad Request"))
+                .andExpect(jsonPath("$.message").exists());
+    }
 }

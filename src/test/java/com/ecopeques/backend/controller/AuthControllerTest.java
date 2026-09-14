@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -100,5 +101,26 @@ class AuthControllerTest {
                 .andExpect(jsonPath("$.message").value("Credenciales inválidas"));
 
         verify(authService).login(any(AuthRequestDTO.class));
+    }
+
+    @Test
+    @DisplayName("POST /api/auth/registro - Debe retornar HTTP 400 Bad Request cuando el payload es inválido")
+    void testRegistrarUsuario_PayloadInvalido_RetornaHTTP400() throws Exception {
+        mockMvc.perform(post("/api/auth/registro")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "nombre": "",
+                                  "email": "correo-invalido",
+                                  "password": "",
+                                  "rol": null
+                                }
+                                """))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.error").value("Bad Request"))
+                .andExpect(jsonPath("$.message").exists());
+
+        verifyNoInteractions(authService);
     }
 }

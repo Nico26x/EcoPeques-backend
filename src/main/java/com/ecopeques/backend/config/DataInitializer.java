@@ -13,6 +13,7 @@ import com.ecopeques.backend.repository.NinoRepository;
 import com.ecopeques.backend.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -26,6 +27,7 @@ public class DataInitializer implements CommandLineRunner {
     private final NinoRepository ninoRepository;
     private final MisionRepository misionRepository;
     private final MisionNinoRepository misionNinoRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
@@ -37,14 +39,14 @@ public class DataInitializer implements CommandLineRunner {
         Usuario docente = Usuario.builder()
                 .nombre("María Rodríguez")
                 .email("docente@ecopeques.com")
-                .password("123456")
+                .password(passwordEncoder.encode("123456"))
                 .rol(RolUsuario.DOCENTE)
                 .build();
 
         Usuario padre = Usuario.builder()
                 .nombre("Carlos Gómez")
                 .email("padre@ecopeques.com")
-                .password("123456")
+                .password(passwordEncoder.encode("123456"))
                 .rol(RolUsuario.PADRE)
                 .build();
 

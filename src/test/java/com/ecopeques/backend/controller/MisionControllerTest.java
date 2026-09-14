@@ -2,11 +2,14 @@ package com.ecopeques.backend.controller;
 
 import com.ecopeques.backend.domain.enums.CategoriaMision;
 import com.ecopeques.backend.dto.response.MisionResponseDTO;
+import com.ecopeques.backend.security.JwtUtils;
+import com.ecopeques.backend.security.UserDetailsServiceImpl;
 import com.ecopeques.backend.service.MisionService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -18,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MisionController.class)
+@WithMockUser
 class MisionControllerTest {
 
     @Autowired
@@ -25,6 +29,12 @@ class MisionControllerTest {
 
     @MockitoBean
     private MisionService misionService;
+
+    @MockitoBean
+    private JwtUtils jwtUtils;
+
+    @MockitoBean
+    private UserDetailsServiceImpl userDetailsService;
 
     @Test
     @DisplayName("GET /api/misiones - Debe retornar lista de misiones activas y HTTP 200 OK")

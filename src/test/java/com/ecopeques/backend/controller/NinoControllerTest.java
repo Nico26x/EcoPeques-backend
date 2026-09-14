@@ -5,11 +5,14 @@ import com.ecopeques.backend.domain.enums.EstadoMision;
 import com.ecopeques.backend.dto.response.MisionNinoResponseDTO;
 import com.ecopeques.backend.dto.response.NinoResponseDTO;
 import com.ecopeques.backend.exception.ResourceNotFoundException;
+import com.ecopeques.backend.security.JwtUtils;
+import com.ecopeques.backend.security.UserDetailsServiceImpl;
 import com.ecopeques.backend.service.NinoService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -22,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(NinoController.class)
+@WithMockUser
 class NinoControllerTest {
 
     @Autowired
@@ -29,6 +33,12 @@ class NinoControllerTest {
 
     @MockitoBean
     private NinoService ninoService;
+
+    @MockitoBean
+    private JwtUtils jwtUtils;
+
+    @MockitoBean
+    private UserDetailsServiceImpl userDetailsService;
 
     @Test
     @DisplayName("GET /api/ninos/1 - Debe retornar perfil del niño con HTTP 200 OK")

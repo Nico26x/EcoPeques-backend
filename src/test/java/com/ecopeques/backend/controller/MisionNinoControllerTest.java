@@ -4,11 +4,14 @@ import com.ecopeques.backend.domain.enums.CategoriaMision;
 import com.ecopeques.backend.domain.enums.EstadoMision;
 import com.ecopeques.backend.dto.response.MisionNinoResponseDTO;
 import com.ecopeques.backend.exception.ResourceNotFoundException;
+import com.ecopeques.backend.security.JwtUtils;
+import com.ecopeques.backend.security.UserDetailsServiceImpl;
 import com.ecopeques.backend.service.MisionNinoService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -20,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MisionNinoController.class)
+@WithMockUser
 class MisionNinoControllerTest {
 
     @Autowired
@@ -27,6 +31,12 @@ class MisionNinoControllerTest {
 
     @MockitoBean
     private MisionNinoService misionNinoService;
+
+    @MockitoBean
+    private JwtUtils jwtUtils;
+
+    @MockitoBean
+    private UserDetailsServiceImpl userDetailsService;
 
     @Test
     @DisplayName("PUT /api/misiones-ninos/1/completar - Debe marcar misión como completada y retornar HTTP 200 OK")

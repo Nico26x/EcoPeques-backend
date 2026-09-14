@@ -2,6 +2,7 @@ package com.ecopeques.backend.security;
 
 import com.ecopeques.backend.domain.model.Usuario;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -55,8 +56,12 @@ public class JwtUtils {
     }
 
     public boolean validateToken(String token) {
-        getClaims(token);
-        return !isTokenExpired(token);
+        try {
+            getClaims(token);
+            return !isTokenExpired(token);
+        } catch (JwtException | IllegalArgumentException ex) {
+            return false;
+        }
     }
 
     private boolean isTokenExpired(String token) {
